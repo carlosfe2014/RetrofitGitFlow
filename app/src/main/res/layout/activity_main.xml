@@ -5,18 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-
-    <ScrollView
+    
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/tvResult"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="red"
-            android:textSize="20sp"
-            android:padding="8dp"/>
-    </ScrollView>
+        android:layout_height="match_parent"
+        android:id="@+id/rvPosts">
+    </android.support.v7.widget.RecyclerView>
+
 
 </android.support.constraint.ConstraintLayout>

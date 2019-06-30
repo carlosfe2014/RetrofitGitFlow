@@ -2,10 +2,13 @@ package pe.edu.cibertec.retrofitgitflow;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import java.util.List;
 
+import pe.edu.cibertec.retrofitgitflow.adapters.PostsAdapter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -16,13 +19,17 @@ public class MainActivity extends AppCompatActivity {
 
 
     private TextView tvResult;
+    RecyclerView rvPosts;
+    List<Post> posts;
+
+    PostsAdapter postAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        tvResult = findViewById(R.id.tvResult);
+        rvPosts = findViewById(R.id.rvPosts);
 
         callService();
     }
@@ -45,16 +52,11 @@ public class MainActivity extends AppCompatActivity {
                 if(!response.isSuccessful()){
                     tvResult.setText("Code: " + response.code());
                 } else {
-                    List<Post> posts = response.body();
-                    for(Post post : posts){
-                        String contenido = "";
-                        contenido += "ID: " + post.getId() + "\n";
-                        contenido += "User ID: " + post.getUserId() + "\n";
-                        contenido += "Title: " + post.getTitle() + "\n";
-                        contenido += "Body: " + post.getText() + "\n";
-                        contenido += "--------------------------------------------------------\n";
-                        tvResult.append(contenido);
-                    }
+                    posts = response.body();
+                    postAdapter = new PostsAdapter(posts);
+                    rvPosts.setAdapter(postAdapter);
+                    rvPosts.setLayoutManager
+                            (new LinearLayoutManager(MainActivity.this));
                 }
 
             }
